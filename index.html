@@ -98,8 +98,7 @@
         </div>
         <div id="mainBody">
             <div id='form'>
-                <label>Laser Wevelength (nm) </label> <input id="laser-wavelenght" type="number" step=0.0001
-                    value="532">
+                <label>Laser Wevelength (nm) </label> <input id="laser-wavelenght" type="number" step=0.0001>
                 <label>Raman Mode (nm) </label> <input id="raman-mode" type="number" step=0.0001>
                 <label>Raman Shift (cm<sup>-1</sup>) </label> <input id="raman-shift" type="number" step=0.0001>
             </div>
@@ -129,14 +128,14 @@
         ramanMode.oninput = (ev) => {
             var lwVal = laserWavelength.value
             var rmVal = ramanMode.value
-            var rsVal = (1 / rmVal - 1 / lwVal) * 1e7
+            var rsVal = (1 / lwVal - 1 / rmVal) * 1e7
             ramanShift.value = roundToThree(rsVal)
         }
 
         ramanShift.oninput = (ev) => {
             var lwVal = laserWavelength.value
             var rsVal = ramanShift.value
-            var rmVal = 1.0 / (1.0 / lwVal + rsVal / 1.0e7)
+            var rmVal = 1.0 / (1.0 / lwVal - rsVal / 1.0e7)
             ramanMode.value = roundToThree(rmVal)
         }
 
