@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name=viewport content='width=700'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversion for Raman Spectroscopy</title>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <style>
+        html,
+        body {
+            font-size: 1.25rem;
+        }
+
+        #root {
+            width: fit-content;
+            height: 98vh;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            flex-flow: column;
+        }
+
+        #header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+
+        #header>div:first-child {
+            padding-right: 1rem;
+            font-size: 1.75rem;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        #header>div:nth-child(2) {
+
+            font-size: 1rem;
+            text-overflow: ellipsis;
+        }
+
+        #mainBody {
+            flex: 1;
+        }
+
+
+        input[type='text'],
+        input[type='file'],
+        input[type='number'],
+        input[type='submit'],
+        select {
+            font-size: 1.0rem;
+        }
+
+        #form {
+            display: grid;
+            grid-auto-flow: row;
+            grid-column-gap: .5em;
+            grid-row-gap: 0.5em;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: repeat(3, max-content);
+            align-items: center;
+        }
+        hr{
+            height: 1px;
+            background-color: black;
+        }
+
+
+        #note {
+            font-style: italic;
+            font-size: medium;
+            text-align: center;
+            width: 60%;
+            margin: 5em auto;
+        }
+    </style>
+</head>
+
+<!-- ToDo: Inherit from a base template -->
+
+<body>
+    <div id="root">
+        <div id="header">
+            <div>Conversion for <br>
+                Raman Spectroscopy</div>
+            <!-- Change the printer name here.  -->
+            <div style="font-style: italic;">cm<sup>-1</sup> to nm (and vice versa) </div>
+            <!-- ToDo: Use pycups to detect printer name dynamically -->
+            <hr>
+        </div>
+        <div id="mainBody">
+            <div id='form'>
+                <label>Laser Wevelength (nm) </label> <input id="laser-wavelenght" type="number" step=0.0001
+                    value="532">
+                <label>Raman Mode (nm) </label> <input id="raman-mode" type="number" step=0.0001>
+                <label>Raman Shift (cm<sup>-1</sup>) </label> <input id="raman-shift" type="number" step=0.0001>
+            </div>
+            <div>
+                <p id="note">
+                   <b>Note:</b> -ve sign in Raman Shift signifies Stokes line and +ve sign for AntiStokes
+                </p>
+            </div>
+        </div>
+
+
+
+    </div>
+    </div>
+
+    <script>
+        const laserWavelength = document.getElementById('laser-wavelenght')
+        const ramanMode = document.getElementById('raman-mode')
+        const ramanShift = document.getElementById('raman-shift')
+        const roundToThree = (x) => Math.round(x * 1000) / 1000
+
+
+        ramanMode.oninput = (ev) => {
+            var lwVal = laserWavelength.value
+            var rmVal = ramanMode.value
+            var rsVal = (1 / rmVal - 1 / lwVal) * 1e7
+            ramanShift.value = roundToThree(rsVal)
+        }
+
+        ramanShift.oninput = (ev) => {
+            var lwVal = laserWavelength.value
+            var rsVal = ramanShift.value
+            var rmVal = 1.0 / (1.0 / lwVal + rsVal / 1.0e7)
+            ramanMode.value = roundToThree(rmVal)
+        }
+
+
+    </script>
+
+</body>
+
+</html>
