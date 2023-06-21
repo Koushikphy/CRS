@@ -52,6 +52,7 @@
         input[type='submit'],
         select {
             font-size: 1.0rem;
+            width: 10pc;
         }
 
         #form {
@@ -59,7 +60,7 @@
             grid-auto-flow: row;
             grid-column-gap: .5em;
             grid-row-gap: 0.5em;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 0.5fr;
             grid-template-rows: repeat(3, max-content);
             align-items: center;
         }
@@ -75,6 +76,10 @@
             text-align: center;
             width: 60%;
             margin: 5em auto;
+        }
+        #footer{
+            font-size: 0.9rem;
+            text-align: center;
         }
     </style>
 </head>
@@ -105,7 +110,11 @@
             </div>
         </div>
 
-
+        <div id="footer">
+            <div id="add">
+                Created by <a href="https://github.com/Koushikphy"> Koushikphy</a>
+            </div>
+        </div>
 
     </div>
     </div>
