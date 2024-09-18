@@ -101,6 +101,8 @@
                 <label>Laser Wevelength (nm) </label> <input id="laser-wavelenght" type="number" step=0.0001>
                 <label>Raman Mode (nm) </label> <input id="raman-mode" type="number" step=0.0001>
                 <label>Raman Shift (cm<sup>-1</sup>) </label> <input id="raman-shift" type="number" step=0.0001>
+                <label>Phonon Energy (meV) </label> <input id="ph-enr-mev" type="number" step=0.0001>
+                <label>Phonon Energy (THz) </label> <input id="ph-enr-tz" type="number" step=0.0001>
             </div>
             <div>
                 <p id="note">
@@ -122,6 +124,8 @@
         const laserWavelength = document.getElementById('laser-wavelenght')
         const ramanMode = document.getElementById('raman-mode')
         const ramanShift = document.getElementById('raman-shift')
+        const phEnergyMev = document.getElementById('ph-enr-mev')
+        const phEnergyThz = document.getElementById('ph-enr-tz')
         const roundToThree = (x) => Math.round(x * 1000) / 1000
 
 
@@ -130,6 +134,11 @@
             var rmVal = ramanMode.value
             var rsVal = (1 / lwVal - 1 / rmVal) * 1e7
             ramanShift.value = roundToThree(rsVal)
+            
+            var tmp = Math.abs(1 / lwVal - 1 / rmVal)* 1239.8 * 1000
+            phEnergyMev.value = roundToThree(tmp)
+            phEnergyThz.value = roundToThree(tmp * 0.2418)
+            
         }
 
         ramanShift.oninput = (ev) => {
@@ -137,6 +146,10 @@
             var rsVal = ramanShift.value
             var rmVal = 1.0 / (1.0 / lwVal - rsVal / 1.0e7)
             ramanMode.value = roundToThree(rmVal)
+            
+            var tmp = Math.abs(1 / lwVal - 1 / rmVal)* 1239.8 * 1000
+            phEnergyMev.value = roundToThree(tmp)
+            phEnergyThz.value = roundToThree(tmp * 0.2418)
         }
 
 
