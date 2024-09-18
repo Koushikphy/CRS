@@ -55,6 +55,11 @@
             width: 10pc;
         }
 
+	input:disabled {
+	  background: white;
+	  color: black;
+	  border: solid 1px black
+	}
         #form {
             display: grid;
             grid-auto-flow: row;
@@ -101,8 +106,8 @@
                 <label>Laser Wevelength (nm) </label> <input id="laser-wavelenght" type="number" step=0.0001>
                 <label>Raman Mode (nm) </label> <input id="raman-mode" type="number" step=0.0001>
                 <label>Raman Shift (cm<sup>-1</sup>) </label> <input id="raman-shift" type="number" step=0.0001>
-                <label>Phonon Energy (meV) </label> <input id="ph-enr-mev" type="number" step=0.0001>
-                <label>Phonon Energy (THz) </label> <input id="ph-enr-tz" type="number" step=0.0001>
+                <label>Phonon Energy (meV) </label> <input id="ph-enr-mev" type="number" step=0.0001 disabled>
+                <label>Phonon Energy (THz) </label> <input id="ph-enr-tz" type="number" step=0.0001 disabled>
             </div>
             <div>
                 <p id="note">
@@ -136,6 +141,7 @@
             ramanShift.value = roundToThree(rsVal)
             
             var tmp = Math.abs(1 / lwVal - 1 / rmVal)* 1239.8 * 1000
+            console.log(tmp, tmp * 0.2418)
             phEnergyMev.value = roundToThree(tmp)
             phEnergyThz.value = roundToThree(tmp * 0.2418)
             
@@ -148,6 +154,7 @@
             ramanMode.value = roundToThree(rmVal)
             
             var tmp = Math.abs(1 / lwVal - 1 / rmVal)* 1239.8 * 1000
+            console.log(tmp, tmp * 0.2418)
             phEnergyMev.value = roundToThree(tmp)
             phEnergyThz.value = roundToThree(tmp * 0.2418)
         }
